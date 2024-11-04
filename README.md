@@ -75,3 +75,52 @@ $ docker compose build web
 `ALLOWED_HOSTS` -- настройка Django со списком разрешённых адресов. Если запрос прилетит на другой адрес, то сайт ответит ошибкой 400. Можно перечислить несколько адресов через запятую, например `127.0.0.1,192.168.0.1,site.test`. [Документация Django](https://docs.djangoproject.com/en/3.2/ref/settings/#allowed-hosts).
 
 `DATABASE_URL` -- адрес для подключения к базе данных PostgreSQL. Другие СУБД сайт не поддерживает. [Формат записи](https://github.com/jacobian/dj-database-url#url-schema).
+
+### Как добавить переменные окружения в kubernetes Secret
+
+Создайте файл с переменными окружения, контент которого будет выглядеть так:
+
+```sh
+$ cat .env
+SECRET_KEY=my-secret-key
+DATABASE_URL=postgres://test_k8s:OwOtBep9Frut@192.168.0.108:5433/test_k8s
+ALLOWED_HOSTS=*
+DEBUG=True
+```
+
+Запустите команду создания Secret в папке с .env файлом:
+
+```sh
+kubectl create secret generic django-web-secret --from-env-file=.env
+```
+
+### Запуск манифеста
+
+Чтобы открыть сайт запустите:
+
+```sh
+kubectl apply -f local/django-web-deployment.yaml
+```
+
+для автоматической очистки БД от сессий запустите:
+
+```sh
+kubectl apply -f local/django-clearsessions.yaml
+```
+
+Для запуска миграций:
+
+```sh
+kubectl apply -f kubernetes/django-migrate.yaml
+```
+
+### БД внутри кластера
+
+Установите [helm](https://artifacthub.io/packages/helm/bitnami/postgresql). и создайте БД внутри пода:
+
+```sh
+sudo -u postgres psql
+postgres=# create database mydb;
+postgres=# create user myuser with encrypted password 'mypass';
+postgres=# grant all privileges on database mydb to myuser;
+```
