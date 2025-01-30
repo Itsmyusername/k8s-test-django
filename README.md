@@ -129,7 +129,7 @@ postgres=# grant all privileges on database mydb to myuser;
 1. Создайте Pod для образа [nginx](https://hub.docker.com/_/nginx), который будет иметь ваш `namespace`. Например, [так](envs/yc-sirius-test/nginx-pod.yaml)
 2. Создайте Service для этого Pod'а. Например, вот [так](envs/yc-sirius-test/nginx-service.yaml).
 
-*Для создания манифеста в Lens, нужно нажать на `+` (New tab) внизу на панели и выюрать "Create resource".
+*Для создания манифеста в Lens, нужно нажать на `+` (New tab) внизу на панели и выбрать "Create resource".
 
 ## Как подготовить dev окружение
 
@@ -138,5 +138,29 @@ postgres=# grant all privileges on database mydb to myuser;
 ```commandline
 kubectl create secret generic ssl-cert-secret   --from-file=RootCA.pem=/путь/к/сертификату/RootCA.pem   --namespace=<namespace>
 ```
+
+## Сборка и публикация докер-образов
+1. Создайте репозиторий на [Docker Hub](https://hub.docker.com).
+2. Создайте образ в директории с Dockerfile:
+    ```
+   docker build -t <юзернейм>/<репозиторий>:<тэг> .
+   ```
+3. Загрузите образ на Docker Hub:
+    ```
+    docker push <юзернейм>/<репозиторий>:<тэг>
+   ```
+
 Замените `/путь/к/сертификату/RootCA.pem` и `<namespace>`.
+
 Для тестирования подключения к базе данных postgres, создайте манифест вроде [этого](envs/yc-sirius-test/postgres-client.yaml).
+
+## Сборка и публикация докер-образов
+1. Создайте репозиторий на [Docker Hub](https://hub.docker.com).
+2. Создайте образ в директории с Dockerfile:
+    ```
+   docker build -t <юзернейм>/<репозиторий>:<тэг> .
+   ```
+3. Загрузите образ на Docker Hub:
+    ```
+    docker push <юзернейм>/<репозиторий>:<тэг>
+   ```
