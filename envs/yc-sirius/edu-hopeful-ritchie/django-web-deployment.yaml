@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: django-web
-        image: django_app:latest
+        image: xofrik/django_app:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
