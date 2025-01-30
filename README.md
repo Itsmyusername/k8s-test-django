@@ -154,19 +154,6 @@ kubectl create secret generic ssl-cert-secret   --from-file=RootCA.pem=/путь
 
 Для тестирования подключения к базе данных postgres, создайте манифест вроде [этого](envs/yc-sirius-test/postgres-client.yaml).
 
-## Сборка и публикация докер-образов
-1. Создайте репозиторий на [Docker Hub](https://hub.docker.com).
-2. Создайте образ в директории с Dockerfile:
-    ```
-   docker build -t <юзернейм>/<репозиторий>:<тэг> .
-   ```
-3. Загрузите образ на Docker Hub:
-    ```
-    docker push <юзернейм>/<репозиторий>:<тэг>
-   ```
-
-      ```
-
 ## Запуск сайта через port-forwarding
 1. Создайте секрет [файл](envs/yc-sirius/edu-hopeful-ritchie/django-web-secret.yaml). В нем должен быть ваш `DATABASE_URL`, который можно скопировать из `postgres` secret в Lens как `dsn`.
 2. Создайте pod/deployment [файл](envs/yc-sirius/edu-hopeful-ritchie/django-web-deployment.yaml).
