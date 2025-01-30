@@ -170,4 +170,9 @@ kubectl create secret generic ssl-cert-secret   --from-file=RootCA.pem=/путь
 ## Запуск сайта через port-forwarding
 1. Создайте секрет [файл](envs/yc-sirius/edu-hopeful-ritchie/django-web-secret.yaml). В нем должен быть ваш `DATABASE_URL`, который можно скопировать из `postgres` secret в Lens как `dsn`.
 2. Создайте pod/deployment [файл](envs/yc-sirius/edu-hopeful-ritchie/django-web-deployment.yaml).
-3. Сделайте port-forwarding через Lens.
+3. Создайте service [файл](envs/yc-sirius/edu-hopeful-ritchie/django-web-service.yaml).
+4. Сделайте port-forwarding через Lens.
+
+## Заметки
+- Ссылка на сайт - [тут](https://edu-hopeful-ritchie.sirius-k8s.dvmn.org/admin/).
+- Ссылка на ресурсы - [тут](https://sirius-env-registry.website.yandexcloud.net/edu-hopeful-ritchie.html).
